@@ -128,7 +128,7 @@ public class PostgreSQLResultFetcher: ResultFetcher {
                 var result = [String]()
                 for i in 0..<count {
                    let val = value[i]
-                   if val > 47, let str = String(bytes: [UInt8(bitPattern: val)], encoding: .utf8) {
+                   if val >= 32, let str = String(bytes: [UInt8(bitPattern: val)], encoding: .utf8) {
                     //Get ASCII Value
                       currentElement += str
                    } else if currentElement != "" {
