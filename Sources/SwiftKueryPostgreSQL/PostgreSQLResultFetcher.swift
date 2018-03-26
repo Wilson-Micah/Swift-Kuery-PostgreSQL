@@ -122,6 +122,25 @@ public class PostgreSQLResultFetcher: ResultFetcher {
             }
             
             switch type {
+            case .textArray:
+				
+                var currentElement = ""
+                var result = [String]()
+                for i in 0..<count {
+                   let val = value[i]
+                   if val > 47, let str = String(bytes: [UInt8(bitPattern: val)], encoding: .utf8) {
+                    //Get ASCII Value
+                      currentElement += str
+                   } else if currentElement != "" {
+                      result.append(currentElement)
+                      currentElement = ""
+                   }
+                }
+                if currentElement != "" {
+                   result.append(currentElement)
+                }
+
+                return result
             case .varchar:
                 fallthrough
             case .char:
